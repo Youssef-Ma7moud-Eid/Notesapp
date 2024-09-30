@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noteapp_project/widgets/Noteview_body.dart';
+import 'package:noteapp_project/widgets/noteview_body.dart';
 
 class Noteslistview extends StatelessWidget {
   const Noteslistview({super.key});
@@ -9,7 +9,7 @@ class Noteslistview extends StatelessWidget {
     return ListView.builder(
       itemCount: 10,
       itemBuilder: (context, index) {
-        return const Notesviewbody();
+        return const Notesviewbody(text: 'Add note');
       },
     );
   }
