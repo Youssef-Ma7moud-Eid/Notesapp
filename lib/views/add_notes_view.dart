@@ -3,8 +3,8 @@ import 'package:noteapp_project/widgets/add_note_buttom_sheet.dart';
 import 'package:noteapp_project/widgets/customappbar.dart';
 import 'package:noteapp_project/widgets/noteslist_view.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class AddNotesView extends StatelessWidget {
+  const AddNotesView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16)),
               context: context,
               builder: (context) {
-                return const Addnotebuttomsheet();
+                return Addnotebuttomsheet();
               });
         },
         child: const Icon(

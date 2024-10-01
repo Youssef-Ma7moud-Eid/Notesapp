@@ -1,31 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:noteapp_project/widgets/custom_text_field.dart';
-import 'package:noteapp_project/widgets/text_buttom.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:noteapp_project/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:noteapp_project/widgets/form_buttom_sheet_body.dart';
+import 'package:noteapp_project/widgets/snak_bar_widget.dart';
 
-class Addnotebuttomsheet extends StatelessWidget {
+class Addnotebuttomsheet extends StatefulWidget {
   const Addnotebuttomsheet({super.key});
 
   @override
+  State<Addnotebuttomsheet> createState() => _AddnotebuttomsheetState();
+}
+
+class _AddnotebuttomsheetState extends State<Addnotebuttomsheet> {
+  bool inAsyncCall = false;
+
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: const Column(
-          children: [
-            SizedBox(
-              height: 30,
-            ),
-            CustomTextField(textfield: 'Title'),
-            SizedBox(
-              height: 20,
-            ),
-            CustomTextField(textfield: 'Content', size: 5),
-            SizedBox(
-              height: 60,
-            ),
-            TextButtom(),
-          ],
-        ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) {
+          return AddNoteCubit();
+        }),
+      ],
+      child: BlocConsumer<AddNoteCubit, AddNoteState>(
+        listener: (context, state) {
+          if (state is AddNoteLoading) {
+            inAsyncCall = true;
+          } else if (state is AddNoteFailure) {
+            inAsyncCall = false;
+
+            scaffoldmessenger(
+                color: Colors.red, text: state.errorMessage, context: context);
+          } else if (state is AddNoteSuccess) {
+            Navigator.of(context).pop();
+            scaffoldmessenger(
+                color: Colors.green,
+                text: 'Note added successfull',
+                context: context);
+          }
+        },
+        builder: (context, state) {
+          return ModalProgressHUD(
+              inAsyncCall: inAsyncCall,
+              child: const SingleChildScrollView(child: AddNoteForm()));
+        },
       ),
     );
   }
