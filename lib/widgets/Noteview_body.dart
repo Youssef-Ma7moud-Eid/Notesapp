@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noteapp_project/cubits/notes_cubit/notes_cubit.dart';
+
+import 'package:noteapp_project/models/note_model.dart';
 import 'package:noteapp_project/views/edit_note_view.dart';
 
 class Notesviewbody extends StatelessWidget {
-  const Notesviewbody({super.key, required this.text});
-  final String text;
+  const Notesviewbody({super.key, required this.model});
+  final NoteModel model;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, EditNote.id, arguments: text);
+            Navigator.pushNamed(context, EditNote.id, arguments: model);
           },
           child: Container(
             margin: const EdgeInsets.only(bottom: 15),
@@ -27,7 +32,7 @@ class Notesviewbody extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      text,
+                      model.title,
                       style: const TextStyle(
                           color: Colors.black,
                           fontSize: 23,
@@ -36,9 +41,9 @@ class Notesviewbody extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      'Build your Career with',
-                      style: TextStyle(
+                    Text(
+                      model.subtitle,
+                      style: const TextStyle(
                         color: Color.fromARGB(196, 59, 52, 52),
                         fontSize: 18,
                       ),
@@ -66,7 +71,10 @@ class Notesviewbody extends StatelessWidget {
           right: 5,
           top: 30,
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              model.delete();
+              BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+            },
             icon: const Icon(
               Icons.delete,
               color: Colors.black,
@@ -74,12 +82,12 @@ class Notesviewbody extends StatelessWidget {
             ),
           ),
         ),
-        const Positioned(
+        Positioned(
           right: 25,
           top: 155,
           child: Text(
-            'may 2024',
-            style: TextStyle(
+            model.date,
+            style: const TextStyle(
               color: Color.fromARGB(196, 59, 52, 52),
               fontSize: 15,
             ),

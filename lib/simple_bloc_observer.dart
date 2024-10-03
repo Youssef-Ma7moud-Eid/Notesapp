@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:noteapp_project/cubits/add_note_cubit/add_note_cubit.dart';
 
 class SimpleBlocObserver implements BlocObserver {
   @override
