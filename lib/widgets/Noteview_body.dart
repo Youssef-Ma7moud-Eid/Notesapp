@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noteapp_project/cubits/notes_cubit/notes_cubit.dart';
-
 import 'package:noteapp_project/models/note_model.dart';
 import 'package:noteapp_project/views/edit_note_view.dart';
+import 'package:noteapp_project/widgets/snak_bar_widget.dart';
 
 class Notesviewbody extends StatelessWidget {
   const Notesviewbody({super.key, required this.model});
@@ -22,10 +22,10 @@ class Notesviewbody extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
-              color: const Color(0XFFFFCC80),
+              color: Color(model.color),
             ),
             child: Card(
-              color: const Color(0XFFFFCC80),
+              color: Color(model.color),
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: Column(
@@ -74,6 +74,11 @@ class Notesviewbody extends StatelessWidget {
             onPressed: () {
               model.delete();
               BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+              scaffoldmessenger(
+                  context: context,
+                  text: 'Note deleted',
+                  color: Colors.white,
+                  background: Colors.red);
             },
             icon: const Icon(
               Icons.delete,

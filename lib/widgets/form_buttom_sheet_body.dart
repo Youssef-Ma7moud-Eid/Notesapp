@@ -18,6 +18,7 @@ class AddNoteForm extends StatefulWidget {
 
 class _AddNoteFormState extends State<AddNoteForm> {
   String? title, subtitle;
+  Color color = Colors.green;
   GlobalKey<FormState> formkey = GlobalKey(); // to access validate
   AutovalidateMode autovalidateMode =
       AutovalidateMode.disabled; // to appear errors in forms
@@ -56,12 +57,14 @@ class _AddNoteFormState extends State<AddNoteForm> {
             const SizedBox(
               height: 60,
             ),
-            const SizedBox(
-              height: 80,
-              child: ListColorBody(),
+            SizedBox(
+              height: 50 * 2,
+              child: ListColorBody(
+                indexx: -1,
+              ),
             ),
             const SizedBox(
-              height: 30,
+              height: 50,
             ),
             TextButtom(
               onPressed: () {
@@ -69,11 +72,14 @@ class _AddNoteFormState extends State<AddNoteForm> {
                   formkey.currentState!.save();
                   var currentdate = DateTime.now();
                   var formadate = DateFormat("dd-mm-yy").format(currentdate);
+                  color = BlocProvider.of<AddNoteCubit>(context).color;
+                  BlocProvider.of<AddNoteCubit>(context).rebeatcolor();
                   NoteModel model = NoteModel(
-                      title: title!,
-                      subtitle: subtitle!,
-                      date: formadate,
-                      color: Colors.blue.value);
+                    title: title!,
+                    subtitle: subtitle!,
+                    date: formadate,
+                    color: color.value,
+                  );
                   BlocProvider.of<AddNoteCubit>(context).addnote(model);
 
                   setState(() {});

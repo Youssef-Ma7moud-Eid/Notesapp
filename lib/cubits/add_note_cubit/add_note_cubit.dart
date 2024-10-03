@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -7,6 +8,7 @@ part 'add_note_cubit_state.dart';
 
 class AddNoteCubit extends Cubit<AddNoteState> {
   AddNoteCubit() : super(AddNoteInitial());
+  Color color = Colors.green;
   addnote(NoteModel note) async {
     emit(AddNoteLoading());
     // await Future.delayed(const Duration(seconds: 5));
@@ -17,6 +19,14 @@ class AddNoteCubit extends Cubit<AddNoteState> {
     } catch (e) {
       emit(AddNoteFailure(e.toString()));
     }
+  }
+
+  addcolor(Color colors) {
+    color = colors;
+  }
+
+  rebeatcolor() {
+    color = Colors.green;
   }
 }
 // generic data

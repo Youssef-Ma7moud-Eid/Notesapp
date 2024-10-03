@@ -24,7 +24,7 @@ class _AddnotebuttomsheetState extends State<Addnotebuttomsheet> {
           BlocProvider.of<NotesCubit>(context).fetchAllNotes();
           Navigator.of(context).pop();
           scaffoldmessenger(
-              color: Colors.green,
+              color: Colors.white,
               text: 'Note added successfull',
               context: context);
         }
@@ -32,7 +32,7 @@ class _AddnotebuttomsheetState extends State<Addnotebuttomsheet> {
       builder: (context, state) {
         return AbsorbPointer(
             absorbing: state is AddNoteLoading ? true : false,
-            child: AddNoteForm());
+            child: const AddNoteForm());
       },
     );
   }
