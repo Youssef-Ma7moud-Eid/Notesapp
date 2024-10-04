@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -42,7 +43,13 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           fontFamily: 'Poppins',
         ),
-        home: const AddNotesView(),
+        home: AnimatedSplashScreen(
+          splash: "assets/images/image.jpg",
+          splashIconSize: 2000.0,
+          backgroundColor: const Color(0XFFFFCD4A),
+          nextScreen: const AddNotesView(),
+          duration: 3000,
+        ),
       ),
     );
   }

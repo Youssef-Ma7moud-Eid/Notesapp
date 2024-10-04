@@ -24,72 +24,74 @@ class _AddNoteFormState extends State<AddNoteForm> {
       AutovalidateMode.disabled; // to appear errors in forms
   @override
   Widget build(BuildContext context) {
-    return Form(
-      autovalidateMode: autovalidateMode,
-      key: formkey,
-      child: Container(
-        margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            CustomTextField(
-              textfield: 'Title',
-              onsaveed: (value) {
-                title = value;
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CustomTextField(
-              textfield: 'Content',
-              size: 5,
-              onsaveed: (value) {
-                subtitle = value;
-              },
-            ),
-            const SizedBox(
-              height: 60,
-            ),
-            SizedBox(
-              height: 50 * 2,
-              child: ListColorBody(
-                indexx: -1,
+    return SingleChildScrollView(
+      child: Form(
+        autovalidateMode: autovalidateMode,
+        key: formkey,
+        child: Container(
+          margin: EdgeInsets.only(
+              left: 20,
+              right: 20,
+              top: 20,
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30,
               ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            TextButtom(
-              onPressed: () {
-                if (formkey.currentState!.validate()) {
-                  formkey.currentState!.save();
-                  var currentdate = DateTime.now();
-                  var formadate = DateFormat("dd-mm-yy").format(currentdate);
-                  color = BlocProvider.of<AddNoteCubit>(context).color;
-                  BlocProvider.of<AddNoteCubit>(context).rebeatcolor();
-                  NoteModel model = NoteModel(
-                    title: title!,
-                    subtitle: subtitle!,
-                    date: formadate,
-                    color: color.value,
-                  );
-                  BlocProvider.of<AddNoteCubit>(context).addnote(model);
+              CustomTextField(
+                textfield: 'Title',
+                onsaveed: (value) {
+                  title = value;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomTextField(
+                textfield: 'Content',
+                size: 5,
+                onsaveed: (value) {
+                  subtitle = value;
+                },
+              ),
+              const SizedBox(
+                height: 60,
+              ),
+              SizedBox(
+                height: 50 * 2,
+                child: ListColorBody(
+                  indexx: -1,
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              TextButtom(
+                onPressed: () {
+                  if (formkey.currentState!.validate()) {
+                    formkey.currentState!.save();
+                    var currentdate = DateTime.now();
+                    var formadate = DateFormat("dd-mm-yy").format(currentdate);
+                    color = BlocProvider.of<AddNoteCubit>(context).color;
+                    BlocProvider.of<AddNoteCubit>(context).rebeatcolor();
+                    NoteModel model = NoteModel(
+                      title: title!,
+                      subtitle: subtitle!,
+                      date: formadate,
+                      color: color.value,
+                    );
+                    BlocProvider.of<AddNoteCubit>(context).addnote(model);
 
-                  setState(() {});
-                } else {
-                  autovalidateMode = AutovalidateMode.always;
-                  setState(() {});
-                }
-              },
-            ),
-          ],
+                    setState(() {});
+                  } else {
+                    autovalidateMode = AutovalidateMode.always;
+                    setState(() {});
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

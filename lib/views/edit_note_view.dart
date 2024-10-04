@@ -23,55 +23,57 @@ class _EditNoteState extends State<EditNote> {
     NoteModel model = ModalRoute.of(context)!.settings.arguments as NoteModel;
     int index = kColors.indexOf(Color(model.color));
     return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.symmetric(vertical: 60, horizontal: 12),
-        child: Column(
-          children: [
-            CustomAppBar(
-              onPressed: () {
-                model.save();
-                BlocProvider.of<NotesCubit>(context).fetchAllNotes();
-                if (BlocProvider.of<AddNoteCubit>(context).color !=
-                    Colors.green) {
-                  model.color =
-                      BlocProvider.of<AddNoteCubit>(context).color.value;
-                }
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 60, horizontal: 12),
+          child: Column(
+            children: [
+              CustomAppBar(
+                onPressed: () {
+                  model.save();
+                  BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+                  if (BlocProvider.of<AddNoteCubit>(context).color !=
+                      Colors.green) {
+                    model.color =
+                        BlocProvider.of<AddNoteCubit>(context).color.value;
+                  }
 
-                BlocProvider.of<AddNoteCubit>(context).rebeatcolor();
-                Navigator.of(context).pop();
-                scaffoldmessenger(
-                  color: Colors.white,
-                  text: 'Note Updated successfull',
-                  context: context,
-                  background: Colors.blue,
-                );
-              },
-              text: 'Edit Note',
-              icon: Icons.check,
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            CustomTextField(
-                onchanged: (data) {
-                  model.title = data;
+                  BlocProvider.of<AddNoteCubit>(context).rebeatcolor();
+                  Navigator.of(context).pop();
+                  scaffoldmessenger(
+                    color: Colors.white,
+                    text: 'Note Updated successfull',
+                    context: context,
+                    background: Colors.blue,
+                  );
                 },
-                textfield: model.title,
-                size: 1),
-            const SizedBox(
-              height: 35,
-            ),
-            CustomTextField(
-                onchanged: (data) {
-                  model.subtitle = data;
-                },
-                textfield: model.subtitle,
-                size: 5),
-            const SizedBox(
-              height: 25,
-            ),
-            SizedBox(height: 50 * 2, child: ListColorBody(indexx: index)),
-          ],
+                text: 'Edit Note',
+                icon: Icons.check,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              CustomTextField(
+                  onchanged: (data) {
+                    model.title = data;
+                  },
+                  textfield: model.title,
+                  size: 1),
+              const SizedBox(
+                height: 35,
+              ),
+              CustomTextField(
+                  onchanged: (data) {
+                    model.subtitle = data;
+                  },
+                  textfield: model.subtitle,
+                  size: 5),
+              const SizedBox(
+                height: 25,
+              ),
+              SizedBox(height: 50 * 2, child: ListColorBody(indexx: index)),
+            ],
+          ),
         ),
       ),
     );
